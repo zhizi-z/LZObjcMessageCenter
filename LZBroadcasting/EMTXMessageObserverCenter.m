@@ -42,6 +42,11 @@
     return _sharedInstance;
 }
 
++ (instancetype)smallCenter
+{
+    return [[self alloc] init];
+}
+
 - (instancetype)init
 {
     if (self = [super init])

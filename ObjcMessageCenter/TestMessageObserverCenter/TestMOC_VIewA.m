@@ -8,7 +8,6 @@
 
 #import "TestMOC_VIewA.h"
 #import "TestMOC_Messages.h"
-#import "EMTXMessageObserverCenter.h"
 
 @interface TestMOC_VIewA()
 
@@ -50,7 +49,7 @@
 - (void)didClickTextButton:(UIButton *)button
 {
     NSDictionary *userInfo = @{@"text" : self.txtField.text, @"object" : self};
-    [[EMTXMessageObserverCenter defaultCenter] postMessageName:UPDATE_LABEL_TEXT_MSG userInfo:userInfo object:self];
+    [self.smallCenter postMessageName:UPDATE_LABEL_TEXT_MSG userInfo:userInfo object:self];
 }
 
 - (void)didClickFontButton:(UIButton *)button

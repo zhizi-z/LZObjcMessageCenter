@@ -26,7 +26,10 @@ typedef NSDictionary * EMTXMessageInfo;
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
 
+//公共消息中心,单例,每次调用都返回相同的对象
 + (instancetype)defaultCenter;
+//小范围消息中心,返回一个新的实例对象,每次调用返回不同的对象
++ (instancetype)smallCenter;
 //在observer里添加一个语句块aHandler,收到aName消息后,执行该语句块aHandler
 - (void)addObserver:(id)observer execution:(void(^)(EMTXMessage *))aHandler name:(EMTXMessageName)aName;
 //添加一个observer去侦听aName消息,收到消息后执行aSelector

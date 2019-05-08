@@ -14,12 +14,15 @@
 
 @interface TestMOC_VC_A ()
 
+@property (nonatomic, strong) EMTXMessageObserverCenter *smallCenter;
+
 @end
 
 @implementation TestMOC_VC_A
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.smallCenter = [EMTXMessageObserverCenter smallCenter];
     
     self.view.backgroundColor = [UIColor whiteColor];
     TestMOC_VIewA *viewA = [[TestMOC_VIewA alloc] initWithFrame:CGRectMake(0, 80, [UIScreen mainScreen].bounds.size.width, 70)];
@@ -34,14 +37,16 @@
     [self.view addSubview:viewB];
     [self.view addSubview:btnText];
     
+    viewA.smallCenter = self.smallCenter;
+    
     //添加修改文本的消息观察者
-//    [[EMTXMessageObserverCenter defaultCenter] addObserver:self selector:@selector(updateTitleText:) name:UPDATE_LABEL_TEXT_MSG];
-    __weak typeof(self) weakSelf = self;
-    //添加修改文本的消息块
-    [[EMTXMessageObserverCenter defaultCenter] addObserver:self execution:^(EMTXMessage * _Nonnull message) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf updateTitleText:message];
-    } name:UPDATE_LABEL_TEXT_MSG];
+    [self.smallCenter addObserver:self selector:@selector(updateTitleText:) name:UPDATE_LABEL_TEXT_MSG];
+//    __weak typeof(self) weakSelf = self;
+//    //添加修改文本的消息块
+//    [self.smallCenter addObserver:self execution:^(EMTXMessage * _Nonnull message) {
+//        __strong typeof(weakSelf) strongSelf = weakSelf;
+//        [strongSelf updateTitleText:message];
+//    } name:UPDATE_LABEL_TEXT_MSG];
 }
 
 - (void)updateTitleText:(EMTXMessage *)message
@@ -58,6 +63,6 @@
 - (void)didClickTextButton:(UIButton *)button
 {
     NSDictionary *userInfo = @{@"text" : @"来自vc的文本", @"object" : self};
-    [[EMTXMessageObserverCenter defaultCenter] postMessageName:UPDATE_LABEL_TEXT_MSG userInfo:userInfo object:self];
+    [self.smallCenter postMessageName:UPDATE_LABEL_TEXT_MSG userInfo:userInfo object:self];
 }
 @end

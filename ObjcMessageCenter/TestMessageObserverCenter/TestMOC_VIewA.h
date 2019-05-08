@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EMTXMessageObserverCenter.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TestMOC_VIewA : UIView
 
+@property (nonatomic, strong) EMTXMessageObserverCenter *smallCenter;
 @end
 
 NS_ASSUME_NONNULL_END
